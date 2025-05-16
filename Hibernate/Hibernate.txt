@@ -1,0 +1,85 @@
+
+
+What is Hibernate ?
+ (This is something like shortcut to use jdbc connectivity )
+Hibernate is an ORM Framework but now the question is what is ORM (Object Relational Mapping )
+why do we need it ?
+As you java is an object oriented language and we deal every aspect of java on the basis of object and we need to store the
+data also in the db and to contact with we guys need SQL and in SQL we write queries and to work professionaly we
+guys need to know the sql queries write them and need to do lot more stuff to deal with this and to
+shorten this headache hibernate comes into the picture which says just give the object and add that in db
+
+How does Hibernate works ?
+hibernate takes the object and understands it and how it understands it .
+on the basis of the class and class is a blueprint
+
+let say we have an object of a class
+
+class student {
+int id ;
+string name ;
+string address ;
+}
+
+with this object what we get to know about this is that we have 3 columns and the different type
+of data types and on the basis of that types we can create the columns of the table and according to
+other object we can add the entries in the table
+
+This is how the hibernate works and understand the object for the mapping
+
+After this we created a new project in java using Maven for the build settings and the build dependencies
+and we are going to use the postgresql  as db and we have to install the dependcies and now we will
+add those inside the class
+pom.xml
+
+
+
+Now lets create the other class for the objects and we have created a student class
+
+
+class student {
+int id ;
+string name ;
+string address ;
+}
+
+now this is the object and as we discussed earlier that hibernate saves the objects directly withour making an effort so
+will this work for save() like this ===== no
+because what it says that you are tying to connect two things want me to do the changes over there for that you need
+to setup a Session and openSession do this
+
+Session session = null;
+
+and for session we need sessionFactory and both these are interfaces
+SessionFactory sf = null;
+we provide the object to the session and will use openSession function over there sf.openSession();
+but what are these this is main question ??????????
+
+   Configuration configuration = new Configuration();
+
+        SessionFactory sessionFactory = configuration.buildSessionFactory() ;
+        Session session = sessionFactory.openSession();
+
+        session.save(student);
+
+        we build it like this but will it work ?
+
+No this will not work why because we are making a configuration but we don't know to whom we are making it we have not mentioned the db name
+password and if we didn't do this then how can we expect from this to save the data in the db
+here now configure comes to picture and we will do this in the next lecture
+
+now the above mentioned question about the session and sessionFactory  ...............
+
+Here it is what it is .........
+
+In Hibernate, SessionFactory is a long-lived object that manages database connections and other resources, while Session is a short-lived object that interacts with the database for a specific transaction.
+SessionFactory:
+It's a factory class for creating Session objects.
+It holds a second-level cache, which can be shared across multiple sessions.
+It manages database connections and other resources.
+It is typically created once per application and reused throughout its lifecycle.
+Session:
+It's a short-lived object that represents a connection with the database for a specific transaction.
+It acts as an interface between the application and the database.
+It provides methods for saving, updating, deleting, and retrieving objects.
+Each session has its own first-level cache, which is cleared when the session is closed.
