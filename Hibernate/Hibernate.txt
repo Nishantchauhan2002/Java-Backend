@@ -267,6 +267,45 @@ public class Main {
     }
 }
 
-this is how my class looks like till this point
+this is how my class looks like till this point now let's go deep and change the main method accorduing to alien class
 
+
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+what if we do create in place of update what this will do is that first this will drop the table if exists and then it will create the new table wn fhten
+inset the data in that
+
+we can change the table name like
+this
+@Entity(name ="Alien_entry") // this will change the entity name and
+
+@Table(name="Alien Table "); // this will change the table name
+
+but as of now the table name is getting picked up from the entity name
+Class == Entity === Table Name
+
+@Column(name ="Column name ") this will chage the column name
+this follows the same hierarchy as mentioned above
+
+by using @Transient we can ask the hibernate to not to store the key in the db just we use that for our purpose for some operations
+
+now let;s work with the complex data type
+
+Exception in thread "main" org.hibernate.type.descriptor.java.spi.JdbcTypeRecommendationException: Could not determine recommended JdbcType for Java type 'com.nishant.Laptop'
+	at org.hibernate.type.descriptor.java.spi.UnknownBasicJavaType.getRecommendedJdbcType(UnknownBasicJavaType.java:50)
+	at org.hibernate.boot.model.process.internal.InferredBasicValueResolver.from(InferredBasicValueResolver.java:195)
+	at org.hibernate.mapping.BasicValue.resolution(BasicValue.java:664)
+	at org.hibernate.mapping.BasicValue.buildResolution(BasicValue.java:461)
+	at org.hibernate.mapping.BasicValue.resolve(BasicValue.java:351)
+	at org.hibernate.mapping.BasicValue.resolve(BasicValue.java:341)
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.lambda$processValueResolvers$6(InFlightMetadataCollectorImpl.java:1827)
+
+
+we will get this if we will pass any object of any other class as a data type to the variable because as of now it understands int string and char but now it does not
+know what is laptop or some special type
+
+how we want our alien table looks like it should looks like
+
+aname , aid , tech | brand | model | ram
+the laptop type should be embedded in the alien table how can we do it is by using the @Embeddable annotation in the laptop class
 

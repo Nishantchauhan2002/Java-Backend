@@ -7,17 +7,22 @@ import org.hibernate.cfg.Configuration;
 
 public class Main {
     public static void main(String[] args) {
-        Student student = new Student();
 
-//        student.setRollNo("6");
-//        student.setsName("Rohit");
-//        student.setsAge(22);
+        Laptop laptop = new Laptop();
+        laptop.setBrand("MackBook");
+        laptop.setModel("i7");
+        laptop.setRam(8);
 
-        Student student2 = null;
+
+        Alien alien = new Alien();
+        alien.setAnanme("XYZ_NAme");
+        alien.setAid("1");
+        alien.setTech("Java");
+        alien.setLaptop(laptop);
 
 
         Configuration configuration = new Configuration();
-        configuration.addAnnotatedClass(com.nishant.Student.class);
+        configuration.addAnnotatedClass(com.nishant.Alien.class);
         configuration.configure();
 
         SessionFactory sessionFactory = configuration.buildSessionFactory() ;
@@ -25,16 +30,9 @@ public class Main {
 
         // we need this only for modificaiton in db
         Transaction transaction = session.beginTransaction();
-//        session.persist(student);
-//        session.merge(student);
-
-        student = session.get(Student.class,"6");
-        session.remove(student);
+        session.persist(alien);
 
         transaction.commit();
-
-       student2 = session.get(Student.class,"1");
-        System.out.println(student2);
 
         session.close();;
         sessionFactory.close();

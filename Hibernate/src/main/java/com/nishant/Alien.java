@@ -1,8 +1,10 @@
 package com.nishant;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 public class Alien {
@@ -10,7 +12,17 @@ public class Alien {
     private String ananme;
     @Id
     private String aid;
+
+    public Laptop getLaptop() {
+        return laptop;
+    }
+
+    public void setLaptop(Laptop laptop) {
+        this.laptop = laptop;
+    }
+
     private String tech;
+    private Laptop laptop;
 
     public String getAnanme() {
         return ananme;
@@ -36,13 +48,13 @@ public class Alien {
         this.tech = tech;
     }
 
-
     @Override
-    public String toString() {
+    public String  toString() {
         return "Alien{" +
                 "ananme='" + ananme + '\'' +
                 ", aid='" + aid + '\'' +
                 ", tech='" + tech + '\'' +
+                ", laptop=" + laptop +
                 '}';
     }
 }
