@@ -1,7 +1,14 @@
 package com.nishant;
 
-public class Student {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jdk.jfr.Enabled;
+import jakarta.persistence.Entity;
 
+
+@Entity
+public class Student {
+    @Id
     private String rollNo;
     private String sName;
     private int sAge;

@@ -83,3 +83,190 @@ It's a short-lived object that represents a connection with the database for a s
 It acts as an interface between the application and the database.
 It provides methods for saving, updating, deleting, and retrieving objects.
 Each session has its own first-level cache, which is cleared when the session is closed.
+
+
+
+After all this configure comes to the picture and configure is the function which will configure the db for us
+but if we call the configure function then we guys need to xml file for this because this will go to find the xml file ad this will not find it and then we will get the
+error for that so lets configure the xml for us
+
+
+now lets add the configuration in the xml file in the cinfigure we need to add the password username and the db name then
+after this run this but what we get is the error but why ???????????/
+
+
+Exception in thread "main" org.hibernate.UnknownEntityTypeException: Unable to locate persister: com.nishant.Student
+	at org.hibernate.metamodel.model.domain.internal.MappingMetamodelImpl.getEntityDescriptor(MappingMetamodelImpl.java:395)
+	at org.hibernate.internal.SessionImpl.getEntityPersister(SessionImpl.java:1501)
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:108)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:183)
+	at org.hibernate.event.internal.DefaultSaveEventListener.performSaveOrUpdate(DefaultSaveEventListener.java:33)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:82)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
+	at org.hibernate.internal.SessionImpl.fireSave(SessionImpl.java:663)
+
+
+
+to resolve this issue we need to provide the class while configuring the session
+  configuration.addAnnotatedClass(com.nishant.Student.class);
+
+  we add this but we still get the error but why because to use the class we need to use annotations in the class in teh student class
+
+  import jakarta.persistence.Entity; //import the annotations from jakarta
+
+
+  @Entity // this is the annotations
+  but why we import from this from the jakarta this is because
+  there are lots of orm present in the market and they behave differently to work and here the problem arises
+  can we have the standards for all orms to follow and that's why we get the jakarta
+
+
+  now after this we get another error
+  Exception in thread "main" org.hibernate.AnnotationException: Entity 'com.nishant.Student' has no identifier (every '@Entity' class must declare or inherit at least one '@Id' or '@EmbeddedId' property)
+  	at org.hibernate.boot.model.internal.InheritanceState.determineDefaultAccessType(InheritanceState.java:289)
+  	at org.hibernate.boot.model.internal.InheritanceState.getElementsToProcess(InheritanceState.java:226)
+  	at org.hibernate.boot.model.internal.InheritanceState.postProcess(InheritanceState.java:162)
+  	at org.hibernate.boot.model.internal.EntityBinder.handleIdentifier(EntityBinder.java:410)
+  	at org.hibernate.boot.model.internal.EntityBinder.bindEntityClass(EntityBinder.java:251)
+  	at org.hibernate.boot.model.internal.AnnotationBinder.bindClass(AnnotationBinder.java:404)
+  	at org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl.processEntityHierarchies(AnnotationMetadataSourceProcessorImpl.java:266)
+  	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess$1.processEntityHierarchies(MetadataBuildingProcess.java:281)
+
+
+this is because we don't have any pk or any identifier
+so we need to provide the id to the student class so we will add @Id in the student class and then this issue will be resolved
+
+
+Now let's see whether the data is getting saved or not
+
+No the data is not getting saved but why
+as we know everytime when we made any changes in the db that is a transaction and we need to commit very transaction in the db
+we have a commit method to commit the changes and this method is a part of transaction and for that we need to create an object of the transaction method
+and transaction is an interface and we have to create it's object using the session
+and session have a method beginTransaction which will return an object of transaction
+
+Transaction tr = session.beginTransaction();
+tr.commit()
+
+this how this will work
+very simple it will just start the transaction tells hibernate that here is something that is going to be changes now you begin and after the changes commit
+the changes and mark it as done
+
+
+but now this says the table does not exist and for that we can create the table  y just adding the line in the cfg.xml that will create the table whenever it needs and
+if not then it will update the table
+
+ <property name="hibernate.hbm2ddl.auto">update</property>
+
+
+now as we are getting the data getting stored in the db now the task is how this happens????
+
+As we know that internally hibernates uses the sql queries or jdbc to store the data but how can we make visible our queries how can we do this ?
+
+we can do this by just including the dependency like
+ <property name="hibernate.show_sql">true</property>
+ <property name="hibernate.format_sql">true</property> // this will format the query in a proper way
+
+
+
+now lets modify this and do some changes
+
+in this save(java.lang.Object)' is deprecated since version 6.0  we have used the save method which shows us that this method is deprecated
+so as we discussed earlier for matching the standard with JPA we have persist() method that we can use in place of save() method
+
+and we also need to close the session for our sessionFactory and session
+
+now lets clear the configuration for our app the 3 mentioned lines for the configure the connection
+
+now we save the data but now we want to fetch the data and now we don't need to transaction becuase we are not making any change in the db we are just fetching it
+we can get the dta by using the get method of session which needs two params one for the data type and the other for the primary key
+
+ student2 = session.get(Student.class,"1");
+        System.out.println(student2);
+
+
+
+Now till this point we have read about Create, Read now lets talks about the update and the delete methods what are those?
+For anything that we want to update is first fetch the object of that student and then we will call the update method but ooops!!! what did it happended ?
+we don't have the update method it is deprecated and now what can we do is we can use the merge method for this and hen we can update this and as we know that we
+have to update the data so we need to use the transaction for this  so how the code will look lke is .......
+
+
+student.setRollNo("6");
+student.setsName("Rohit");
+student.setsAge(22);
+
+SessionFactory sessionFactory = configuration.buildSessionFactory() ;
+Session session = sessionFactory.openSession();
+
+Transaction transaction = session.beginTransaction();
+session.merge(student);
+  transaction.commit();
+
+
+this is how this will loook like and if we don't find the data using teh merge query then it will insert the data in the db
+
+let's talk about delete
+
+delete is depecated in session
+
+but we can use remove method for this
+student = session.get(Student.class,"6");
+ session.remove(student);
+
+
+this is how firstly we use the student object to find that particular student and then we delete the use using the merge function in the session
+
+
+As of now we have find it out that we have not specified any table name we just used @Entity annotaion and the table where we inserted the data is just same as
+out class student in just small letters
+now let's check how can we rename it and provide the name as we want
+
+
+
+package com.nishant;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+public class Main {
+    public static void main(String[] args) {
+        Student student = new Student();
+
+//        student.setRollNo("6");
+//        student.setsName("Rohit");
+//        student.setsAge(22);
+
+        Student student2 = null;
+
+
+        Configuration configuration = new Configuration();
+        configuration.addAnnotatedClass(com.nishant.Student.class);
+        configuration.configure();
+
+        SessionFactory sessionFactory = configuration.buildSessionFactory() ;
+        Session session = sessionFactory.openSession();
+
+        // we need this only for modificaiton in db
+        Transaction transaction = session.beginTransaction();
+//        session.persist(student);
+//        session.merge(student);
+
+        student = session.get(Student.class,"6");
+        session.remove(student);
+
+        transaction.commit();
+
+       student2 = session.get(Student.class,"1");
+        System.out.println(student2);
+
+        session.close();;
+        sessionFactory.close();
+    }
+}
+
+this is how my class looks like till this point
+
+
