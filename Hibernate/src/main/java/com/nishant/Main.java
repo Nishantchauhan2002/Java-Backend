@@ -10,22 +10,20 @@ public class Main {
 
         Laptop laptop = new Laptop();
         laptop.setBrand("MackBook");
-        laptop.setModel("i7");
-        laptop.setRam(8);
-
+        laptop.setModel("m1");
+        laptop.setRam(12);
 
         Alien alien = new Alien();
-        alien.setAnanme("XYZ_NAme");
-        alien.setAid("1");
-        alien.setTech("Java");
+        alien.setAnanme("RobinHood_NAme");
+        alien.setAid("2");
+        alien.setTech("C++");
         alien.setLaptop(laptop);
-
 
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(com.nishant.Alien.class);
         configuration.configure();
 
-        SessionFactory sessionFactory = configuration.buildSessionFactory() ;
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.openSession();
 
         // we need this only for modificaiton in db
@@ -34,7 +32,8 @@ public class Main {
 
         transaction.commit();
 
-        session.close();;
+        session.close();
+        ;
         sessionFactory.close();
     }
 }
