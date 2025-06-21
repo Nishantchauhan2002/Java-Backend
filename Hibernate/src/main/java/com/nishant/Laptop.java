@@ -17,8 +17,6 @@ public class Laptop {
     private String brand;
     private String model;
     private int ram;
-    @ManyToMany
-    private List<Alien> aliens;
 
     public int getLid() {
         return lid;
@@ -42,14 +40,6 @@ public class Laptop {
 
     public void setModel(String model) {
         this.model = model;
-    }
-
-    public List<Alien> getAlien() {
-        return aliens;
-    }
-
-    public void setAlien(List<Alien> aliens) {
-        this.aliens = aliens;
     }
 
     public int getRam() {

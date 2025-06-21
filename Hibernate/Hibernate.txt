@@ -377,3 +377,45 @@ Exception in thread "main" java.lang.NullPointerException: Cannot invoke "org.hi
 
 we stopeed the mapping from both of the tables but we have to map it atleast from one so we remove theone 
 it works and no more tabnle we have 
+
+
+NOw we are going to work on eger fetching and lazy fetching and for that we need to make some changes and we need to keep one things in mind is that 
+one alien can hvae many laptops but one laptop belongs to one alien so we have to do some changes regarding that let;s do them 
+ 
+ now after the changes we tried to find out the data in this but we don't hvae the query for this 
+         Alien a5 = session.get(Alien.class, 2);
+
+hibernate uses the cache how lets find it out ??
+why is this because we are working in one session everything is happening in the same session not in the other session that's why this is happening like this 
+
+for the query we can create a new session and then we can use the query and find the data using the query  
+ 
+ as i uses the other session i get the query like this 
+ Hibernate: 
+    select
+        a1_0.aid,
+        a1_0.ananme,
+        a1_0.tech 
+    from
+        Alien a1_0 
+    where
+        a1_0.aid=?
+
+
+
+carefully if we notice this we get that it gives us all the data of that alien except the laptop but why is that because when we have a 
+collection in an entity then it basically uses the lazy fetch by defalut it implementing the lazy fetch means it will gives the all data when we need it somewhere like if 
+i print the data then it will fetch the all data that is called lazy fetching when we need it we get it 
+
+as i print it then the query and the data look like this 
+
+
+Hibernate: select a1_0.aid,a1_0.ananme,a1_0.tech from Alien a1_0 where a1_0.aid=?
+Hibernate: select l1_0.Alien_aid,l1_1.lid,l1_1.brand,l1_1.model,l1_1.ram from Alien_Laptop l1_0 join Laptop l1_1 on l1_1.lid=l1_0.laptops_lid where l1_0.Alien_aid=?
+Alien{ananme='RobinHood_NAme', aid='2', tech='C++', laptop=[Laptop{lid='1'brand='MackBook', model='m1', ram=12}, Laptop{lid='2'brand='MackBook', model='m3', ram=16}]}
+
+
+what if i don't want the lazy fetcing we can go for eager how can we do it like this 
+    @OneToMany(fetch = FetchType.EAGER)
+
+used this in the alien and i get the data here in the witht the query 

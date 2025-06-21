@@ -39,18 +39,8 @@ public class Main {
         alien1.setAid("3");
         alien1.setTech("Backend");
 
-        Alien alien2 = new Alien();
-        alien2.setAnanme("Michican_Tap");
-        alien2.setAid("4");
-        alien2.setTech("Frontend");
-
         alien.setLaptops(Arrays.asList(laptop, laptop1));
-        alien1.setLaptops(Arrays.asList(laptop1, laptop2));
-        alien2.setLaptops(Arrays.asList(laptop));
-
-        laptop.setAlien(Arrays.asList(alien, alien2));
-        laptop1.setAlien(Arrays.asList(alien, alien1));
-        laptop2.setAlien(Arrays.asList(alien1));
+        alien1.setLaptops(Arrays.asList(laptop2));
 
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(com.nishant.Alien.class);
@@ -68,12 +58,15 @@ public class Main {
 
         session.persist(alien);
         session.persist(alien1);
-        session.persist(alien2);
 
         transaction.commit();
 
+        Session session2 = sessionFactory.openSession();
+        Alien a5 = session2.get(Alien.class, 2);
+        // System.out.println(a5);
+
+        session2.close();
         session.close();
-        ;
         sessionFactory.close();
     }
 }
