@@ -419,3 +419,24 @@ what if i don't want the lazy fetcing we can go for eager how can we do it like 
     @OneToMany(fetch = FetchType.EAGER)
 
 used this in the alien and i get the data here in the witht the query 
+
+NOw as we have sql to fetch the data from the db we have the hql to fetch the data using hibernate let's do this 
+remove the necessary changes from the main file and then we do some changes in the hibernate file change the type from create to update so that the data should not be lost and then we 
+run it and try to fetch the data using hql 
+
+ // Query query = session.createQuery("from Laptop where brand like ?1 and ram
+        // =?2");
+        // Lisr<Laptops> list = query.getResultList();
+        // query.setParameter(1,brand);
+        // query.setParameter(2,ram); 
+
+this is how the queries are wriiteen and passed in the creare query and we can pass the params also but we need to keep that in mind which param we are passing 
+so we numbered them with 1 and 2 
+
+for fetcing the only one things out of the other we can select in the query like select model and for that we have to change the data type which we want we should e
+except the result in the string 
+
+
+let's go with get() vs Load()
+
+get will fire the query and give us the data but load is lke the lazy loading 
