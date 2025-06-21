@@ -321,3 +321,51 @@ the same
 ohhhhhh!!!! we 
 forget to tell the alien class that this is an one to one relation fter this works fine and we are done witht the one t one relation 
  
+
+ One to Many 
+
+ Now we need to provide a list of laptopo rather then just one laptop we added the list of laptops and passed the data on the main class 
+ so that we ca push the dat ain the db and we have onetomany relation in the tables now let's runt his will this work 
+ obivooulsy now beacuse we have not perseit the objec twe addt hat there we run ti now this will rok 
+ yes this worked buyt what we observed is that this created a separate tbale for us which include dht id of the lapopt and ht id ofg the 
+ alien and this is how orks the one to many relation but what if i don't wnat to create the the another table what i need to do let's discuss that 
+
+
+  for that we can do is that we can create the refernce pf the alien in the laptop table why os that so becuse a laptop belongs to one alien not to the other aliens so we can 
+  add the name there in the tbale let's do that paret 
+
+  now we have created the alien in the l;aptop table but now we need to tell him the which alien he has lets do that in the main section 
+  after this we run thit but again we get the same error how is that so 
+   Could not determine recommended JdbcType for Java type 'com.nishant.Alien'
+        at org.hibernate.type.descriptor.java.spi.UnknownBasicJavaType.getRecommendedJdbcType(UnknownBasicJavaType.java:50)
+        at org.hibernate.boot.model.process.internal.InferredBasicValueResolver.from(InferredBasicValueResolver.java:195)
+        at org.hibernate.mapping.BasicValue.resolution(BasicValue.java:664)
+
+        let's find it out 
+        why thir eror happended 
+This usually happens when we are trying to build the relation of two table but we forget to tell them which relation it is 
+now we are makeing a relation between aliend and laptop from alien we told him but from we haven't let's do this 
+
+
+Exception in thread "main" org.hibernate.AnnotationException: Property 'com.nishant.Laptop.alien' is not a collection and may not be a '@OneToMany', '@ManyToMany', or '@ElementCollection'
+i gotthis exceptipn but why because according to our knowledge many laptops can belong to one alien so the relation should be of many to one but what i have given this is 
+one to many and that is wrong always rememberabout the relation part what are you building 
+
+yaah now it works 
+now we the relation in the laptop table about the alien bu the problem is same still we have 3rd table but why is that so becuase the alien is handluing the one to many relation and the 
+laptop is handling the many to one relation so they are treating them individually but how can er skip them 
+let's do that this is now on my ego ...........
+ 
+ we have tell the alien table not to map the data how can we do this is like 
+     @OneToMany(mappedBy = "alien")
+
+so this will create the tbale now 
+no erorr and no 3rd table done with this 
+
+one to many and many to one is done 
+let's do this with many to many 
+
+
+we have to make some changes because now 1 laptop can belong to many aliens and 1 alien can have mutiple laptops how can we do this lat's explore this 
+
+ 
