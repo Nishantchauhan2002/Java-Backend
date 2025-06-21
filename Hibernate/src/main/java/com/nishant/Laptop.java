@@ -3,9 +3,11 @@ package com.nishant;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.*;;
 
 @Entity
 public class Laptop {
@@ -15,8 +17,8 @@ public class Laptop {
     private String brand;
     private String model;
     private int ram;
-    @ManyToOne
-    private Alien alien;
+    @ManyToMany
+    private List<Alien> aliens;
 
     public int getLid() {
         return lid;
@@ -42,12 +44,12 @@ public class Laptop {
         this.model = model;
     }
 
-    public Alien getAlien() {
-        return alien;
+    public List<Alien> getAlien() {
+        return aliens;
     }
 
-    public void setAlien(Alien alien) {
-        this.alien = alien;
+    public void setAlien(List<Alien> aliens) {
+        this.aliens = aliens;
     }
 
     public int getRam() {

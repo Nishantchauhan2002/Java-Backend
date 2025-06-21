@@ -23,16 +23,34 @@ public class Main {
         laptop1.setRam(16);
         laptop1.setLid(2);
 
-        List<Laptop> list = Arrays.asList(laptop, laptop1);
+        Laptop laptop2 = new Laptop();
+        laptop2.setBrand("MackBook Pro");
+        laptop2.setModel("m1");
+        laptop2.setRam(32);
+        laptop2.setLid(3);
 
         Alien alien = new Alien();
         alien.setAnanme("RobinHood_NAme");
         alien.setAid("2");
         alien.setTech("C++");
-        alien.setLaptops(list);
 
-        laptop.setAlien(alien);
-        laptop1.setAlien(alien);
+        Alien alien1 = new Alien();
+        alien1.setAnanme("Pirates_Grill");
+        alien1.setAid("3");
+        alien1.setTech("Backend");
+
+        Alien alien2 = new Alien();
+        alien2.setAnanme("Michican_Tap");
+        alien2.setAid("4");
+        alien2.setTech("Frontend");
+
+        alien.setLaptops(Arrays.asList(laptop, laptop1));
+        alien1.setLaptops(Arrays.asList(laptop1, laptop2));
+        alien2.setLaptops(Arrays.asList(laptop));
+
+        laptop.setAlien(Arrays.asList(alien, alien2));
+        laptop1.setAlien(Arrays.asList(alien, alien1));
+        laptop2.setAlien(Arrays.asList(alien1));
 
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(com.nishant.Alien.class);
@@ -46,7 +64,11 @@ public class Main {
         Transaction transaction = session.beginTransaction();
         session.persist(laptop);
         session.persist(laptop1);
+        session.persist(laptop2);
+
         session.persist(alien);
+        session.persist(alien1);
+        session.persist(alien2);
 
         transaction.commit();
 

@@ -368,4 +368,12 @@ let's do this with many to many
 
 we have to make some changes because now 1 laptop can belong to many aliens and 1 alien can have mutiple laptops how can we do this lat's explore this 
 
- 
+ we have made the significant changes that we need to make and it worked first time it we hit the goal 
+
+
+it runs but agin we have another table ove the db and we know how to avoid this how can we do it let's do iot by using mapped by but it does not work why is that so lets 
+find it out whtehre this work only for ManytoONe ???
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "org.hibernate.mapping.ToOne.getReferencedEntityName()" because "toOne" is null
+
+we stopeed the mapping from both of the tables but we have to map it atleast from one so we remove theone 
+it works and no more tabnle we have 
