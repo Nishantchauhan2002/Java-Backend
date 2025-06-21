@@ -12,6 +12,7 @@ public class Main {
         laptop.setBrand("MackBook");
         laptop.setModel("m1");
         laptop.setRam(12);
+        laptop.setLid(1);
 
         Alien alien = new Alien();
         alien.setAnanme("RobinHood_NAme");
@@ -21,6 +22,7 @@ public class Main {
 
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(com.nishant.Alien.class);
+        configuration.addAnnotatedClass(com.nishant.Laptop.class);
         configuration.configure();
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -28,6 +30,7 @@ public class Main {
 
         // we need this only for modificaiton in db
         Transaction transaction = session.beginTransaction();
+        session.persist(laptop);
         session.persist(alien);
 
         transaction.commit();

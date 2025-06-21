@@ -5,13 +5,22 @@ import jakarta.persistence.Id;
 import jdk.jfr.Enabled;
 import jakarta.persistence.Entity;
 
-
 @Entity
 public class Student {
+
     @Id
+    private int lid;
     private String rollNo;
     private String sName;
     private int sAge;
+
+    public int getId() {
+        return lid;
+    }
+
+    public void setId(int lid) {
+        this.lid = lid;
+    }
 
     public String getRollNo() {
         return rollNo;
@@ -36,6 +45,7 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
+                "lid='" + lid + '\'' +
                 "rollNo='" + rollNo + '\'' +
                 ", sName='" + sName + '\'' +
                 ", sAge=" + sAge +

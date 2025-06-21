@@ -309,3 +309,15 @@ how we want our alien table looks like it should looks like
 aname , aid , tech | brand | model | ram
 the laptop type should be embedded in the alien table how can we do it is by using the @Embeddable annotation in the laptop class
 
+
+
+Now we are working on one ton one relation so first i need to make the class an entity and then i need to have an primary key in the table we 
+created that proving the annotaion@entity and @Id and then we compile it we get the error 
+
+Exception in thread "main" org.hibernate.type.descriptor.java.spi.JdbcTypeRecommendationException: Could not determine recommended JdbcType for Java type 'com.nishant.Laptop'
+becuase we havenot add that class in the sessionFactory oncfiguration becuase now we have that as an entity and then we runn it and 
+what happended again we get the error what is this this is 
+the same 
+ohhhhhh!!!! we 
+forget to tell the alien class that this is an one to one relation fter this works fine and we are done witht the one t one relation 
+ 

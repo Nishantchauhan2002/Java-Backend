@@ -1,9 +1,10 @@
 package com.nishant;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,6 +14,10 @@ public class Alien {
     @Id
     private String aid;
 
+    private String tech;
+    @OneToOne
+    private Laptop laptop;
+
     public Laptop getLaptop() {
         return laptop;
     }
@@ -20,9 +25,6 @@ public class Alien {
     public void setLaptop(Laptop laptop) {
         this.laptop = laptop;
     }
-
-    private String tech;
-    private Laptop laptop;
 
     public String getAnanme() {
         return ananme;
@@ -49,7 +51,7 @@ public class Alien {
     }
 
     @Override
-    public String  toString() {
+    public String toString() {
         return "Alien{" +
                 "ananme='" + ananme + '\'' +
                 ", aid='" + aid + '\'' +
